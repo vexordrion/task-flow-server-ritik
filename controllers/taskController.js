@@ -31,6 +31,28 @@ const getTasks = async (req, res) => {
   }
 };
 
+
+//search api
+const searchtask = async(req,res)=>{
+  try {
+    let key = req.params.key;
+
+    let tasks = await Task.find({
+      $or:[
+        {title:{$regex:key,$options:"i"}},
+        {description:{$regex:key ,$options:"i"}},
+        {category:{$regex:key ,$options:"i"}},
+      ]
+    })
+    res.json({success:true,result:tasks})
+
+    
+  } catch (error) {
+     res.status(500).json({success:false, errors:error})
+    
+  }
+}
+
 // Get single task
 const getTask = async (req, res) => {
   try {
@@ -85,4 +107,6 @@ const getStats = async (req, res) => {
   }
 };
 
-module.exports = { createTask, getTasks, getTask, updateTask, deleteTask, getStats };
+
+
+module.exports = { createTask, getTasks, getTask, updateTask, deleteTask, getStats ,searchtask };
