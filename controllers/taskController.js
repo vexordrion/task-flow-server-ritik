@@ -109,4 +109,33 @@ const getStats = async (req, res) => {
 
 
 
-module.exports = { createTask, getTasks, getTask, updateTask, deleteTask, getStats ,searchtask };
+
+//task status update api
+
+const updateStatus = async (req, res) => {
+  try {
+    let id = req.params.id;
+    let { status } = req.body;  // <-- frontend controls status
+
+    let task = await Task.updateOne(
+      { _id: id },
+      { $set: { status } }
+    );
+
+    res.json({ success: true, updated: task });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Server error' });
+  }
+};
+
+
+
+
+ 
+
+
+
+
+
+module.exports = { createTask, getTasks, getTask, updateTask, deleteTask, getStats ,searchtask,updateStatus };

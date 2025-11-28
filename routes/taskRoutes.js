@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const auth = require('../middleware/authMiddleware');
-const { createTask, getTasks, getTask, updateTask, deleteTask, getStats, searchtask } = require('../controllers/taskController');
+const { createTask, getTasks, getTask, updateTask, deleteTask, getStats, searchtask,updateStatus} = require('../controllers/taskController');
 
 // Protected task routes
 router.use(auth);
@@ -13,5 +13,5 @@ router.get('/:id', getTask);
 router.put('/:id', updateTask);
 router.delete('/:id', deleteTask);
 router.get('/search/:key',searchtask)
-
+router.put('/updatestat/:id',updateStatus)
 module.exports = router;
